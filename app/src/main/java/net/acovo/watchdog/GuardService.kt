@@ -167,9 +167,4 @@ class GuardService : Service() {
         mWatchBinder.destroy()
         super.onDestroy()
     }
-
-    companion object {
-        const val ACTION_START_TASK = "com.example.ACTION_START_TASK"
-        const val EXTRA_MESSAGE = "com.example.EXTRA_MESSAGE"
-    }
 }
