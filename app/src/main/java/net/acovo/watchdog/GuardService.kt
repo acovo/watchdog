@@ -16,6 +16,7 @@ import java.io.FileDescriptor
 import java.io.PrintWriter
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.Future
 import java.util.concurrent.atomic.AtomicInteger
 
 class GuardService : Service() {
@@ -143,14 +144,14 @@ class GuardService : Service() {
         const val EXTRA_MESSAGE = "com.example.EXTRA_MESSAGE"
     }
 
-    private fun executeTask(task: Runnable) {
-        executorService.execute(task)
+    private fun executeTask(task: Runnable):Future<*> {
+        return executorService.submit(task)
+        //executorService.execute(task)
     }
 
-    fun startTask(message: String) {
+    fun watch(package_name: String,interval:Int):String {
         val runnable = Runnable {
-            println("Foreground Service received message: $message")
-
+            println("Foreground Service received message: $package_name")
             try {
                 Thread.sleep(5000)
             } catch (e: InterruptedException) {
@@ -158,5 +159,11 @@ class GuardService : Service() {
             }
         }
         executeTask(runnable)
+
+        return ""
+    }
+
+    fun unwatch(package_name: String) {
+
     }
 }

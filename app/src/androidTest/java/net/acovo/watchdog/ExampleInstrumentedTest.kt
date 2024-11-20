@@ -53,6 +53,9 @@ class ExampleInstrumentedTest {
         result = mCounter?.getCount()
         Log.d(TAG,String.format("result2 %d",result))
 
-        mCounter?.getService()?.startTask("test")
+        mCounter?.getService()?.watch("test1",0)
+        mCounter?.getService()?.watch("test2",0)
+        mCounter?.getService()?.watch("test3",0)
+        mCounter?.getService()?.watch("test4",0)
     }
 }
