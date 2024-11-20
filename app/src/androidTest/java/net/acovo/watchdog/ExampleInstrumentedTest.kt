@@ -24,11 +24,11 @@ import java.util.concurrent.TimeUnit
 class ExampleInstrumentedTest {
     private val TAG = "ExampleInstrumentedTest"
     private val mContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
-    private var mCounter:GuardService.CounterBinder? = null;
+    private var mWatcher:GuardService.WatchBinder? = null;
     private val mConnection = object : ServiceConnection {
         override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
             Log.d(TAG,"onServiceConnected")
-            mCounter = p1 as GuardService.CounterBinder
+            mWatcher = p1 as GuardService.WatchBinder
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
@@ -47,15 +47,16 @@ class ExampleInstrumentedTest {
         mContext.bindService(intent,mConnection,Context.BIND_AUTO_CREATE)
         TimeUnit.SECONDS.sleep(1)
 
-        var result = mCounter?.getCount()
+        var result = mWatcher?.getCount()
         Log.d(TAG,String.format("result1 %d",result))
 
-        result = mCounter?.getCount()
+        result = mWatcher?.getCount()
         Log.d(TAG,String.format("result2 %d",result))
 
-        mCounter?.getService()?.watch("test1",0)
-        mCounter?.getService()?.watch("test2",0)
-        mCounter?.getService()?.watch("test3",0)
-        mCounter?.getService()?.watch("test4",0)
+        mWatcher?.watch("test1",0)
+        mWatcher?.watch("test2",0)
+        mWatcher?.watch("test3",0)
+        mWatcher?.watch("test4",0)
+        mWatcher?.unwatch("test3")
     }
 }
